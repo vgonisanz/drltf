@@ -1,0 +1,11 @@
+pyvirtualdisplay
+gym[box2d]
+stable-baselines3[extra]
+huggingface_sb3
+pyglet
+ale-py==0.7.4
+typer
+pygame
+pydantic
+imgui
+structlog
