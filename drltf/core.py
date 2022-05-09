@@ -62,7 +62,7 @@ class Core():
 
         if not os.path.isdir(model_folder):
             logger.debug("creating_model_folder", folder=model_folder)
-            os.mkdir(model_folder)
+            os.makedirs(model_folder)
 
         self._generate_model_file(model_name)
         self._generate_model_train_report_file(model_folder)
