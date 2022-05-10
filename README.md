@@ -61,7 +61,7 @@ First time you have to:
 
 #### Create a Backup of your model
 
-To publish a new model just run:
+To publish a backup of a model in other of your repositories, just run:
 
 ```bash
 python drltf/bin/backup.py --model-name test --repo-name "lunar-lander-models"
@@ -72,8 +72,10 @@ python drltf/bin/backup.py --model-name test --repo-name "lunar-lander-models"
 To publish a new model just run:
 
 ```bash
-python drltf/bin/publish.py --model-name test --repo-name "lunar-lander-models"
+python drltf/bin/publish_to_leaderboard.py "My very first model" --env-id LunarLander-v2 --model-architecture PPO --models-path models --model-name test
 ```
+
+Require a repository created with `{whoami['name']}/{model_architecture}-{env_id}`.
 
 ## Development
 

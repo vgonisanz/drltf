@@ -12,6 +12,10 @@ from gym.utils import play
 from stable_baselines3 import PPO
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3.common.env_util import make_vec_env
+from stable_baselines3.common.vec_env import DummyVecEnv
+
+from huggingface_hub import HfApi
+from huggingface_sb3 import package_to_hub
 
 from drltf.utils import timeit
 from drltf.window import Window
@@ -145,6 +149,47 @@ class Core():
                     break
                 self._env.render()
             logger.info("simulation_end")
+
+    @staticmethod
+    def whoami():
+        return HfApi().whoami()
+
+    @staticmethod
+    def backup(models_path, model_name, repo_id):
+        api = HfApi()
+        files = [
+            os.path.join(models_path, model_name, "model.zip"),
+            os.path.join(models_path, model_name, "model_eval_report.json"),
+            os.path.join(models_path, model_name, "model_train_report.json")
+        ]
+        for file in files:
+            logger.info("upload_file", file=file, repo_id=repo_id)
+            api.upload_file(
+                path_or_fileobj=file,
+                path_in_repo=file,
+                repo_id=repo_id
+            )
+
+    def publish(self, env_id, model_name, model_architecture, repo_id, commit_message):
+        if not self.load_model(model_name):
+            logger.error("load_model_error_abort_publish")
+            return
+
+        eval_env = DummyVecEnv([lambda: gym.make(env_id)])
+
+        logger.info("package_to_hub", model_name=model_name, 
+                                      model_architecture=model_architecture,
+                                      env_id=env_id,
+                                      repo_id=repo_id,
+                                      commit_message=commit_message)
+
+        package_to_hub(model=self._model,
+                    model_name=model_name, 
+                    model_architecture=model_architecture,
+                    env_id=env_id,
+                    eval_env=eval_env,
+                    repo_id=repo_id,
+                    commit_message=commit_message)
 
     def _generate_model_file(self, model_name):
         model_folder_path, model_file_path = self._compose_model_path(self._models_path, model_name)
