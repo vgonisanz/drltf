@@ -77,6 +77,25 @@ python drltf/bin/publish_to_leaderboard.py "My very first model" --env-id LunarL
 
 Require a repository created with `{whoami['name']}/{model_architecture}-{env_id}`.
 
+### Configure a telegram bot to send you notifications in real time
+
+You will need to set up the following environment variables:
+- `TELEGRAM_NOTIFY_APIKEY`: With your bot conversation
+- `TELEGRAM_NOTIFY_CHATID`: The ID of the conversation
+
+Test with:
+
+```
+python drltf/bin/send_telegram_notification.py "Hello bot"
+```
+
+And you will have a message. If it works, just add use it on Python code:
+
+```
+from drltf.utils import notify_telegram
+notify_telegram("Hello bot")
+```
+
 ## Development
 
 To start developing this project, clone this repo and do:

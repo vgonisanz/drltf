@@ -9,3 +9,4 @@ pygame
 pydantic
 imgui
 structlog
+python-telegram-bot
