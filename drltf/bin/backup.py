@@ -1,5 +1,7 @@
 """
-Script to publish a model in HuggingFaces
+Script to backup a model in HuggingFaces user repository.
+
+Require a repository created with {whoami['name']}/{repo_name}.
 """
 import os
 import typer
@@ -22,15 +24,15 @@ def main(
     iam = typer.confirm(
         f"Are you '{whoami['name']}'?")
     if not iam:
-        typer.echo("Publishing aborted by user missmatch")
+        typer.echo("Backup aborted by user missmatch")
         typer.Exit(0)
 
-    model_to_upload = os.path.join(models_path, model_name, "model.zip")
+    repo_id = f"{whoami['name']}/{repo_name}"
 
     send = typer.confirm(
-        f"Are you sure you want to publish model '{model_name}' at HuggingFace from ?")
+        f"Are you sure you want to Backup model '{model_name}' at HuggingFace in {repo_id} ?")
     if send:
-        typer.echo("Publishing...")
+        typer.echo("Creating backup...")
         files = [
             os.path.join(models_path, model_name, "model.zip"),
             os.path.join(models_path, model_name, "model_eval_report.json"),
@@ -40,11 +42,11 @@ def main(
             api.upload_file(
                 path_or_fileobj=file,
                 path_in_repo=file,
-                repo_id=f"{whoami['name']}/{repo_name}"
+                repo_id=repo_id
             )
-        typer.echo(f"Check the model at https://huggingface.co/{whoami['name']}/{repo_name}")
+        typer.echo(f"Check the backup of the model at https://huggingface.co/{repo_id}")
     else:
-        typer.echo("Publishing aborted")
+        typer.echo("Backup aborted")
 
 
 if __name__ == "__main__":

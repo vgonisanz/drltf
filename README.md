@@ -48,14 +48,26 @@ ffmpeg -f x11grab -s 1280x720 -i :0.0 -c:v libvpx -quality realtime -cpu-used 0 
 With i3wm and X11 render window system, dont use full screen elements in order to render properly.
 If not, you can get the following error `X connection to :15 broken (explicit kill or server shutdown).`
 
-### Publish
+### Share your models
 
 First time you have to:
 
 1. Create a token at [huggingface account](https://huggingface.co/settings/tokens). You need to create one account before.
-1. Create a repository for this project in the website, In example: `vgonisanz/lunar-lander-models`.
+1. Create a repository for this project in the website. In example:
+  - For backup models you can user: `vgonisanz/lunar-lander-models`
+  - or for publish in the Leaderboard `vgonisanz/PPO-LunarLander-v2`.
 1. Enable git credential: `git config --global credential.helper store`
 1. Login though bash (Credential stored in cache): `huggingface-cli login`
+
+#### Create a Backup of your model
+
+To publish a new model just run:
+
+```bash
+python drltf/bin/backup.py --model-name test --repo-name "lunar-lander-models"
+```
+
+#### Publish in leaderboard
 
 To publish a new model just run:
 
