@@ -1,8 +1,9 @@
 # Hugging face and garbage local
-models
+logs/
+models/
+hub/
 *.mp4
 *.json
-hub/
 
 *.pyc
 .vscode/settings.json

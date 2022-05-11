@@ -126,3 +126,7 @@ clean-test: ## remove test and coverage artifacts
 
 clean-env: ## remove virtual environments (created by tox)
 	rm -fr .tox/
+
+## IA
+run-tensorboard:
+	tensorboard --logdir models/logs

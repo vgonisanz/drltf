@@ -36,7 +36,7 @@ class Core():
     """
     Main class to control gym, training, evaluations and all model stuff.
     """
-    def __init__(self, models_path="models", gym_name="LunarLander-v2", n_envs=1):
+    def __init__(self, models_path="models", gym_name="LunarLander-v2", n_envs=1, tensorboard_log='models/logs'):
         self._model = None
         self._training_config = None
         self._evaluation_config = None
@@ -45,6 +45,7 @@ class Core():
         self._model_folder_path = None
         self._gym_name = gym_name
         self._n_envs = n_envs
+        self._tensorboard_log = tensorboard_log
         self._env = make_vec_env(self._gym_name, n_envs=n_envs)
         if not os.path.isdir(self._models_path):
             logger.warning("model_do_not_exist", path=self._models_path)
@@ -58,7 +59,7 @@ class Core():
 
         logger.info("loading_model", name=model_name)
 
-        self._model = PPO.load(model_file_path, print_system_info=True)
+        self._model = PPO.load(model_file_path, tensorboard_log=self._tensorboard_log, print_system_info=True)
         return True
 
     def save_model(self, model_name):
@@ -83,6 +84,7 @@ class Core():
         self._model = PPO(
             env=self._env,
             verbose=1,
+            tensorboard_log=self._tensorboard_log,
             **self._training_config.dict()
         )
 

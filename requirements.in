@@ -10,3 +10,4 @@ pydantic
 imgui
 structlog
 python-telegram-bot
+tensorboard
