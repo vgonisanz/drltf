@@ -3,6 +3,8 @@ logs/
 models/
 hub/
 *.mp4
+*.jpg
+*.webm
 *.json
 
 *.pyc
