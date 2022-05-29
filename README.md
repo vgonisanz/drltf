@@ -7,6 +7,8 @@ chapter 1 for reinforcement learning course.
 
 You can learn all about the chapter at [this blog entry](https://huggingface.co/blog/deep-rl-intro)
 
+All the code in python notebooks can be found on [this Github repository](https://github.com/huggingface/deep-rl-class)
+
 </div>
 
 ## Usage
